@@ -26,7 +26,7 @@ app.post("/tasks", async (req, res, next) => {
       [desc, deadline, priority, is_completed]
     );
 
-    res.json({ data: task.rowCount });
+    res.json({message: 'Added Data Successfully'});
   } catch (error) {
     next(error);
   }
@@ -45,7 +45,7 @@ app.get("/tasks", async function (req, res, next) {
 app.get("/tasks/:id", async function (req, res, next) {
   try {
     const id = req.params.id;
-    let task = await pool.query("SELECT * FROM tasks WHERE ID = $1", [id]);
+    let task = await pool.query("SELECT * FROM tasks WHERE id = $1 ", [id]);
 
     if (task.rows.length === 0) {
       res.status(404).json({ message: "Task not found" });
@@ -57,15 +57,27 @@ app.get("/tasks/:id", async function (req, res, next) {
   }
 });
 
-app.put("tasks/:id", async (req, res, next) => {
+app.put("/tasks/:id", async (req, res, next) => {
   try {
     const id = req.params.id;
-    let [desccription, deadline, priority, is_completed] = req.body;
+    let {description, deadline, priority, is_completed} = req.body;
 
-    let task = await pool.query(
-      "UPDATE tasks SET description = $1, deadline = $2, priority = $3, is_completed = $4 WHERE id = $5 ",
-      [description]
+    let updateTask = await pool.query(
+      "UPDATE tasks SET description = $1, deadline = $2, priority = $3, is_completed = $4 WHERE id = $5 RETURNING *",
+      [description, deadline, priority, is_completed, id]
     );
+    res.json(updateTask.rows[0]);
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.delete("/tasks/:id", async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    let deleteTask = await pool.query("DELETE FROM tasks WHERE id = $1 RETURNING *", [id]);
+
+    res.json({ message: "Data deleted successfully" });
   } catch (error) {
     next(error);
   }
