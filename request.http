@@ -1,0 +1,20 @@
+### Get All data
+GET http://localhost:3000/tasks
+
+### Get Tasks details
+GET http://localhost:3000/tasks/1
+
+###
+POST http://localhost:3000/tasks
+Content-Type: application/json
+
+{
+    "description": "test",
+    "deadline": "26-04-2024",
+    "priority": "1",
+    "is_completed": "true"
+}
+
+###
+
+
