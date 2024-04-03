@@ -1,0 +1,241 @@
+openapi: 3.0.1
+info:
+  title: Tasks API
+  description: Latihan Dokumentasi API
+  version: 1.0.0
+  contact:
+    email: rizkirobawa@gmail.com
+servers:
+  - url: http://localhost:3000/v1
+tags:
+  - name: Tasks
+    description: Operations about Tasks
+paths:
+  /tasks:
+    post:
+      tags:
+        - "Tasks"
+      summary: Create new tasks
+      description: Create new tasks into system.
+      requestBody:
+        required: true
+        $ref: "#/components/requestBodies/Create"
+      responses:
+        201:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Added Data Successfully
+        400:
+          description: description, deadline, priority, is_completed are required
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: description, deadline, priority, is_completed are required
+    get:
+      tags:
+        - "Tasks"
+      summary: Get All Tasks
+      parameters:
+        - schema:
+            type: string
+          name: keyword
+          in: query
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: OK
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Tasks"
+  /tasks/{id}:
+    get:
+      tags:
+        - "Tasks"
+      summary: Get tasks by id
+      description: Get tasks by id
+      parameters:
+        - schema:
+            type: integer
+          name: id
+          description: The ID of the task.
+          in: path
+          required: true
+      responses:
+        200:
+          description: Returns a single task
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: OK
+                  data:
+                    type: object
+                    $ref: "#/components/schemas/Tasks"
+        404:
+          description: Tasks not found
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: Can't find task with ID 23
+    put:
+      tags:
+        - "Tasks"
+      summary: Update task by id
+      description: Update task by id
+      parameters:
+        - schema:
+            type: integer
+          name: id
+          description: The ID of the task.
+          in: path
+          required: true
+      requestBody:
+        $ref: "#/components/requestBodies/Create"
+      responses:
+        200:
+          description: Task updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Updated data successfully
+                  data:
+                    type: object
+                    $ref: "#/components/schemas/Tasks"
+        404:
+          description: Task not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: Can't find task with ID 23
+    delete:
+      tags:
+        - "Tasks"
+      summary: Delete task by id
+      description: Delete task by id
+      parameters:
+        - schema:
+            type: integer
+          name: id
+          description: The ID of the task.
+          in: path
+          required: true
+      responses:
+        200:
+          description: Task deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Data deleted successfully
+        404:
+          description: Task not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: Can't find task with ID 23
+components:
+  schemas:
+    Tasks:
+      title: User
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        description:
+          type: string
+          example: tugas membuat API
+        deadline:
+          type: string
+          example: 25-03-2024
+        priority:
+          type: integer
+          example: 1
+        is_completed:
+          type: boolean
+          example: true
+  requestBodies:
+    Create:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              description:
+                type: string
+                example: tugas membuat API
+              deadline:
+                type: string
+                example: 25-03-2024
+              priority:
+                type: integer
+                example: 1
+              is_completed:
+                type: boolean
+                example: true

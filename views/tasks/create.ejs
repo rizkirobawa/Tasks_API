@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Create Task</title>
+  </head>
+
+  <body>
+    <form action="/v1/tasks" method="POST">
+      <label for="description">Description:</label>
+      <input type="text" id="description" name="description" /><br /><br />
+
+      <label for="deadline">Deadline:</label>
+      <input type="text" id="deadline" name="deadline" /><br /><br />
+
+      <label for="priority">Priority:</label>
+      <input type="number" id="priority" name="priority" /><br /><br />
+
+      <label for="is_completed">Completed?</label>
+      <br />
+      <input
+        type="radio"
+        id="is_completed_true"
+        name="is_completed"
+        value="true"
+        checked
+      />
+      <label for="is_completed_true">True</label>
+
+      <input
+        type="radio"
+        id="is_completed_false"
+        name="is_completed"
+        value="false"
+      />
+      <label for="is_completed_false">False</label>
+      <br /><br />
+
+      <input type="submit" value="Submit" />
+    </form>
+  </body>
+</html>

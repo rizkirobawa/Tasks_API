@@ -1,30 +1,44 @@
 ### Get All Data
-GET http://localhost:3000/tasks
+GET http://localhost:3000/v1/tasks
+
+### Get Data
+GET http://localhost:3000/v1/tasks?keyword=03
+
+###
+GET http://localhost:3000/v1/tasks
 
 ### Get Tasks Details
-GET http://localhost:3000/tasks/2
+GET http://localhost:3000/v1/tasks/35
 
 ### Create Data
-POST http://localhost:3000/tasks
+POST http://localhost:3000/v1/tasks
 Content-Type: application/json
 
 {
-    "description": "Belajar Crypto",
-    "deadline": "1-04-2024",
-    "priority": "3",
-    "is_completed": "true"
-}
-
-### Update Data
-PUT http://localhost:3000/tasks/2
-Content-Type: application/json
-
-{
-    "description": "Membuat Web Profile",
-    "deadline": "29-09-2024",
+    "description": "Belajar 99",
+    "deadline": "03-04-2024",
     "priority": "1",
     "is_completed": "true"
 }
 
+### Update Data
+PUT http://localhost:3000/v1/tasks/3
+Content-Type: application/json
+
+{
+    "description": "Membuat Web Akun4",
+    "deadline": "29-09-2024",
+    "priority": "12",
+    "is_completed": "true"
+}
+
 ### Deleted Data
-DELETE http://localhost:3000/tasks/8
+DELETE http://localhost:3000/v1/tasks/12
+
+### Deleted Data More than 1
+DELETE http://localhost:3000/v1/tasks-delete
+Content-Type: application/json
+
+{
+  "ids": [2, 10]
+}
